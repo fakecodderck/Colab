@@ -31,13 +31,8 @@ let cachedColabRoot: string | null = null;
 
 function getColabPaths() {
   if (!cachedColabRoot) {
-    let root = __dirname;
-    try {
-      fs.accessSync(root, fs.constants.W_OK);
-    } catch {
-      root = path.join(os.tmpdir(), 'colabcontrol-runtime');
-      fs.mkdirSync(root, { recursive: true, mode: 0o755 });
-    }
+    const root = path.join(os.tmpdir(), 'colabcontrol-runtime');
+    fs.mkdirSync(root, { recursive: true, mode: 0o755 });
     cachedColabRoot = root;
   }
   const venvDir = path.join(cachedColabRoot, '.colab-venv');
