@@ -2196,15 +2196,19 @@ print(json.dumps({"credentials": info, "accessToken": creds.token}))
     }
   });
 
-  // Vite dev middleware or production static assets
-  if (process.env.NODE_ENV !== 'production') {
+  // Serve built production bundle when NODE_ENV=production or started via `npm start`
+  const distPath = path.resolve(__dirname, 'dist');
+  const isProdMode =
+    process.env.NODE_ENV === 'production' ||
+    (process.env.npm_lifecycle_event === 'start' && fs.existsSync(path.join(distPath, 'index.html')));
+
+  if (!isProdMode) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.resolve(__dirname, 'dist');
     app.use(express.static(distPath));
     app.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.join(distPath, 'index.html'));
