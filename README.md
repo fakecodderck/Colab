@@ -18,7 +18,7 @@ Web dashboard for managing **Google Colab** runtimes and notebooks through the o
 ### 1. Push your code to GitHub
 
 1. Create a new GitHub repository (public or private).
-2. Commit and push all project files.
+2. Commit and push all project files (including `package-lock.json`, which Koyeb's Node.js buildpack requires).
    - `.gitignore` already excludes `node_modules/`, `dist/`, `.colab-venv/`, and `.colab-tools/` — do **not** commit virtual environments.
    - Make sure `firebase-applet-config.json` is included if you are reusing the existing Firebase project (or replace it with your own Firebase Web App config — see Step 2 under Auth).
 
